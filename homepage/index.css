@@ -1,0 +1,41 @@
+body {
+  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+}
+.card {
+  margin: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .card {
+    margin: 0.5rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .card {
+    width: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .card {
+    width: 45%;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .card {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    width: 22%;
+  }
+}

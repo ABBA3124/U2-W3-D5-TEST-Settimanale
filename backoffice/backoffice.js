@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
   resetButton()
 })
 
-const Token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E"
+const Token =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E"
 const fetchUrl = "https://striveschool-api.herokuapp.com/api/product/"
-
 
 function submiteProduct() {
   document.getElementById("submitProduct").addEventListener("click", function () {
@@ -27,7 +27,8 @@ function submiteProduct() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-         Authorization: Token},
+        Authorization: Token,
+      },
       body: JSON.stringify(productData),
     })
       //controlli
@@ -40,13 +41,12 @@ function submiteProduct() {
   })
 }
 
-const resetButton = function() {
-  document.getElementById('resetButton').addEventListener('click', function() {
+const resetButton = function () {
+  document.getElementById("resetButton").addEventListener("click", function () {
     if (confirm("Sei sicuro di voler resettare il form?")) {
     }
   })
 }
-
 
 function updateProduct() {
   document.getElementById("updateProduct").addEventListener("click", function () {
@@ -64,12 +64,14 @@ function updateProduct() {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: Token},
+        Authorization: Token,
+      },
       body: JSON.stringify(productData),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
+        alert("Prodotto modificato con successo.")
         refresh()
       })
       .catch((error) => console.error("Error:", error))
@@ -93,12 +95,14 @@ function deleteProduct() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: Token},
+          Authorization: Token,
+        },
         body: JSON.stringify(productData),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
+          alert("Prodotto eliminato con successo.")
           refresh()
         })
         .catch((error) => console.error("Error:", error))
@@ -111,32 +115,34 @@ function deleteProduct() {
 function deleteAllProducts() {
   document.getElementById("deleteAllProduct").addEventListener("click", function () {
     if (confirm("Sei sicuro di voler eliminare tutti i prodotti?")) {
-    //con il get prendo dutti i i prodotti cosi tramite tutti id raccolti cancello tutto
-    fetch(fetchUrl, {
-      method: "GET",
-      headers: {
-        Authorization: Token},
-    })
-      .then((response) => response.json())
-      .then((products) => {
-        // invio una richiesta DELETE per ciascuno quindi un delete all
-        products.forEach((product) => {
-          fetch(`${fetchUrl}${product._id}`, {
-            method: "DELETE",
-            headers: {
-              Authorization: Token},
-          })
-            .then((response) => response.json())
-
-            .then((data) => {
-              console.log(data)
-              console.log("Product deleted:", data)
-              refresh()
-            })
-            .catch((error) => console.error("Error:", error))
-        })
+      //con il get prendo dutti i i prodotti cosi tramite tutti id raccolti cancello tutto
+      fetch(fetchUrl, {
+        method: "GET",
+        headers: {
+          Authorization: Token,
+        },
       })
-      .catch((error) => console.error("Error:", error))
+        .then((response) => response.json())
+        .then((products) => {
+          // invio una richiesta DELETE per ciascuno quindi un delete all
+          products.forEach((product) => {
+            fetch(`${fetchUrl}${product._id}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: Token,
+              },
+            })
+              .then((response) => response.json())
+
+              .then((data) => {
+                console.log(data)
+                console.log("Product deleted:", data)
+                refresh()
+              })
+              .catch((error) => console.error("Error:", error))
+          })
+        })
+        .catch((error) => console.error("Error:", error))
     }
   })
 }
@@ -152,7 +158,8 @@ document.getElementById("searchProduct").addEventListener("click", function () {
   fetch(`${fetchUrl}${productId}`, {
     method: "GET",
     headers: {
-      Authorization: Token},
+      Authorization: Token,
+    },
   })
     .then((response) => {
       if (response.ok) {
@@ -171,6 +178,7 @@ document.getElementById("searchProduct").addEventListener("click", function () {
       document.getElementById("brand").value = product.brand
       document.getElementById("imageUrl").value = product.imageUrl
       document.getElementById("price").value = product.price
+      alert("Prodotto Trovato e Caricato con successo, Una volta completate le modifiche effettua Update")
     })
     .catch((error) => {
       // Se c'è un errore nella richiesta o il prodotto non è stato trovato, mostra un alert
@@ -227,40 +235,50 @@ function displayAllProducts() {
   fetch(fetchUrl, {
     method: "GET",
     headers: {
-      Authorization: Token},
+      Authorization: Token,
+    },
   })
     .then((response) => response.json())
     .then((products) => {
-      const productsList = document.createElement("ul") // Crea un elemento ul per contenere i prodotti
+      const productsList = document.createElement("ul") 
+      productsList.className = "list-group" // add class list-group 
 
-      products.forEach((product) => {
-        const productItem = document.createElement("li") // Crea un elemento li per ogni prodotto
-        productItem.innerHTML = `<span class="text-info">ID:</span> <span class="fw-bold">${product._id}</span><br> Name: ${product.name}<br> Description: ${product.description}<br> Brand: ${product.brand}<br> Image URL: ${product.imageUrl}<br> Price: ${product.price}`
-        productsList.appendChild(productItem) // Aggiungi il <li> alla lista dei prodotti
+        products.forEach((product) => {
+        const productItem = document.createElement("li") 
+        productItem.className = "list-group-item d-flex flex-column flex-md-row align-items-md-center" 
+        productItem.innerHTML = `
+      <div class="flex-shrink-0 mb-3 mb-md-0 me-md-3">
+      <img src="${product.imageUrl}" class="img-fluid rounded" alt="${product.name}" style="width: 100px; height: auto;">
+      </div>
+      <div class="flex-grow-1">
+      <div class="fw-bold">ID: <span class="text-info">${product._id}</span></div>
+      <div>Name: ${product.name}</div>
+      <div>Description: ${product.description}</div>
+      <div>Brand: ${product.brand}</div>
+      <div>Price: <span class="fw-bold">${product.price}€</span></div>
+      </div>
+  ` 
+        productsList.appendChild(productItem) 
       })
 
-      const container = document.getElementById("prova") // Ottieni il div con id "prova"
-      container.innerHTML = "" // Pulisceil contenuto del div
-      container.appendChild(productsList) // Aggiungi la lista dei prodotti al div
+      const container = document.getElementById("prova") 
+      container.innerHTML = "" 
+      container.appendChild(productsList)
     })
     .catch((error) => console.error("Error:", error))
 }
 
-
-document.getElementById("productId").addEventListener("input", function() {
+document.getElementById("productId").addEventListener("input", function () {
   const productIdValue = this.value.trim()
   const submitProductButton = document.getElementById("submitProduct")
-//aggiunto anche al carica dati
+  //aggiunto anche al carica dati
   // Se il valore di productId non è vuoto
   if (productIdValue !== "") {
     submitProductButton.style.display = "none"
-    
   } else {
     submitProductButton.style.display = "block"
   }
 })
-
-
 
 function caricaDatiQuandoAccadeModifica() {
   const params = new URLSearchParams(window.location.search)
@@ -272,7 +290,6 @@ function caricaDatiQuandoAccadeModifica() {
     searchProduct()
     submitProductButton.style.display = "none"
   }
-  
 }
 
 function searchProduct() {
@@ -285,7 +302,8 @@ function searchProduct() {
   fetch(`${fetchUrl}${productId}`, {
     method: "GET",
     headers: {
-      Authorization: Token},
+      Authorization: Token,
+    },
   })
     .then((response) => {
       if (!response.ok) {
@@ -304,7 +322,7 @@ function searchProduct() {
     })
     .catch((error) => {
       console.error("Error:", error)
-      alert("ID che stai cercando di trovare non esiste, assicurati di aver inserito i dati correttamente.")
+      alert("Prodotto eliminato con successo.")
+      window.history.back()
     })
 }
-
