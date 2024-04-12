@@ -127,22 +127,40 @@ document.getElementById('deleteAllProduct').addEventListener('click', function()
 //aggiungo una funzionalità che verifica se continee qualcosa mostra altrimenti no ( prima della mod una volta apparsi restavano in quel modo)
 //adesso voglio aggiungere una funzionalita che ho citato soprache: quando nel campo di input viene inserito /DELETEALL sblocca il pulsante delete all e con allert di conferma)
 document.getElementById("idForm").addEventListener("input", function () {
-    const ciòCheVieneInserito = document.querySelectorAll("#idForm input")
-    const valoreInserito = Array.from(ciòCheVieneInserito).some(input => input.value.trim() !== '')
+    // valore inserito nei campi di input
+    const inputs = document.querySelectorAll("#idForm input")
+    const inputValues = Array.from(inputs).map(input => input.value.trim().toUpperCase()) //non so se tenere il trim o meno (credo sia più opportuno toglierlo perchè è un comando admin)
 
-    // se rileva un valore differente da campo vuoto 
-    if (valoreInserito) {
-        document.getElementById("updateProduct").style.display = "block"
-        document.getElementById("deleteProduct").style.display = "block"
-        document.getElementById("deleteAllProduct").style.display = "block"
+    ///check input se continee /deleteall siccome abbiamo inserito il .trim() non importano i caratteri o spazi ecc,....
+    const deleteAllEntered = inputValues.includes("/DELETEALL")
+
+    // Se deleteAllEntered ha come valore /deleteall, mostra il pulsante deleteall, altrimenti risulta nascosto
+    // Se "/DELETEALL" è stato inserito, chiedi conferma prima di entrare in modalità ADMIN
+    if (deleteAllEntered) {
+        // ho provato con allert ma volevo dare conferma di ciò e quindi ho modificato aggiungendo un confirma (adesso chiede si o no)
+        const confirmation = confirm("ATTENZIONE !!! inserendo questo comando in console stai entrando in modalità ADMIN vuoi procedere?")
+        // Se si seleziona si mostra il pulsante deleteall
+        if (confirmation) {
+            document.getElementById("deleteAllProduct").style.display = "block"
+        } else {
+            document.getElementById("deleteAllProduct").style.display = "none"
+        }
     } else {
-        document.getElementById("updateProduct").style.display = "none"
-        document.getElementById("deleteProduct").style.display = "none"
         document.getElementById("deleteAllProduct").style.display = "none"
     }
+
+    //check input value se contiene qualcosa
+    const hasValue = inputValues.some(value => value !== '')
+
+    // se il valore è diverso dal vuoto mostra anche gli altri pulsanti
+    if (hasValue) {
+        document.getElementById("updateProduct").style.display = "block"
+        document.getElementById("deleteProduct").style.display = "block"
+    } else { //altrimenti nasconde tutti gli altri pulsanti
+        document.getElementById("updateProduct").style.display = "none"
+        document.getElementById("deleteProduct").style.display = "none"
+    }
 })
-
-
 
 
 
