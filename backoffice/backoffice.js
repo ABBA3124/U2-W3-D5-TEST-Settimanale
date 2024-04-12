@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   deleteAllProducts()
   displayAllProducts()
   caricaDatiQuandoAccadeModifica()
+  resetButton()
 })
 
 function submiteProduct() {
@@ -36,6 +37,14 @@ function submiteProduct() {
       .catch((error) => console.error("Error:", error))
   })
 }
+
+const resetButton = function() {
+  document.getElementById('resetButton').addEventListener('click', function() {
+    if (confirm("Sei sicuro di voler resettare il form?")) {
+    }
+  })
+}
+
 
 function updateProduct() {
   document.getElementById("updateProduct").addEventListener("click", function () {
@@ -69,31 +78,33 @@ function updateProduct() {
 
 function deleteProduct() {
   document.getElementById("deleteProduct").addEventListener("click", function () {
-    const productId = document.getElementById("productId").value
-    const productData = {
-      name: document.getElementById("name").value,
-      description: document.getElementById("description").value,
-      brand: document.getElementById("brand").value,
-      imageUrl: document.getElementById("imageUrl").value,
-      price: document.getElementById("price").value,
-    }
+    if (confirm("Sei sicuro di voler eliminare questo prodotto?")) {
+      const productId = document.getElementById("productId").value
+      const productData = {
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        brand: document.getElementById("brand").value,
+        imageUrl: document.getElementById("imageUrl").value,
+        price: document.getElementById("price").value,
+      }
 
-    //richiesta DELETE PRODUCT
-    fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
-      },
-      body: JSON.stringify(productData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        refresh()
+      //richiesta DELETE PRODUCT
+      fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
+        },
+        body: JSON.stringify(productData),
       })
-      .catch((error) => console.error("Error:", error))
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          refresh()
+        })
+        .catch((error) => console.error("Error:", error))
+    }
   })
 }
 
@@ -101,6 +112,7 @@ function deleteProduct() {
 //dopo voglio provare che inserendo nel campo di input un codice tipo. /DELETEALL sblocca il pulsante delete all e con allert di conferma   FATTOOOOOOOOOOOOOOOO
 function deleteAllProducts() {
   document.getElementById("deleteAllProduct").addEventListener("click", function () {
+    if (confirm("Sei sicuro di voler eliminare tutti i prodotti?")) {
     //con il get prendo dutti i i prodotti cosi tramite tutti id raccolti cancello tutto
     fetch("https://striveschool-api.herokuapp.com/api/product/", {
       method: "GET",
@@ -131,6 +143,7 @@ function deleteAllProducts() {
         })
       })
       .catch((error) => console.error("Error:", error))
+    }
   })
 }
 
