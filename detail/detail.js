@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", function () {
   caricaDatiQuandoAccadeScopriDiPiù()
 })
 
+
+const Token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E"
+const fetchUrl = "https://striveschool-api.herokuapp.com/api/product/"
+
+
+
+
 function caricaDatiQuandoAccadeScopriDiPiù() {
   const params = new URLSearchParams(window.location.search)
   const productId = params.get("productId")
@@ -14,12 +21,9 @@ function caricaDatiQuandoAccadeScopriDiPiù() {
 }
 
 function searchProduct(productId) {
-  fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
+  fetch(`${fetchUrl}${productId}`, {
     method: "GET",
-    headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
-    },
+    headers: {Authorization: Token},
   })
     .then((response) => {
       if (!response.ok) {

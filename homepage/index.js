@@ -3,14 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingIndicator.style.display = 'inline' 
     fetchProducts()
   })
-  
+  const Token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E"
+  const fetchUrl = "https://striveschool-api.herokuapp.com/api/product/"
+
   function fetchProducts() {
-    fetch("https://striveschool-api.herokuapp.com/api/product/", {
+    fetch(fetchUrl, {
       method: "GET",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
-      },
+      headers: { Authorization: Token}
     })
       .then((response) => response.json())
       .then((data) => {
@@ -50,4 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
       container.appendChild(card)
     })
   }
+
+
   
