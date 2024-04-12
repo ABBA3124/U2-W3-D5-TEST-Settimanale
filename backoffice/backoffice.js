@@ -88,7 +88,7 @@ function deleteProduct() {
 }
 
 
-
+//voglio provare a creare un delete all product con un allert di conferma
 function deleteAllProduct() {
   document.getElementById("deleteAllProduct").addEventListener("click", function () {
     const productId = document.getElementById("productId").value
@@ -119,8 +119,12 @@ function deleteAllProduct() {
 
 
 
+
+
+
 // DA SISTEMARE FA SCHIFO
 document.getElementById("productForm").addEventListener("input", function () {
   document.getElementById("updateProduct").style.display = "block"
   document.getElementById("deleteProduct").style.display = "block"
+  document.getElementById("deleteAllProduct").style.display = "block"
 })
