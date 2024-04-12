@@ -256,13 +256,33 @@ function displayAllProducts() {
     .catch((error) => console.error("Error:", error))
 }
 
+
+document.getElementById("productId").addEventListener("input", function() {
+  const productIdValue = this.value.trim()
+  const submitProductButton = document.getElementById("submitProduct")
+//aggiunto anche al carica dati
+  // Se il valore di productId non è vuoto
+  if (productIdValue !== "") {
+    submitProductButton.style.display = "none"
+    
+  } else {
+    submitProductButton.style.display = "block"
+  }
+})
+
+
+
 function caricaDatiQuandoAccadeModifica() {
   const params = new URLSearchParams(window.location.search)
   const productId = params.get("productId")
+  //aggiunto anche al carica dati cosi quando mi inserisce nell'input il valore viene bloccato il reset
+  const submitProductButton = document.getElementById("submitProduct")
   if (productId) {
     document.getElementById("productId").value = productId
     searchProduct()
+    submitProductButton.style.display = "none"
   }
+  
 }
 
 function searchProduct() {
@@ -299,3 +319,4 @@ function searchProduct() {
       alert("ERRORE NEL CARICAMENTO DEI DATI LATO SERVER, assicurati di aver inserito i dati correttamente.")
     })
 }
+
