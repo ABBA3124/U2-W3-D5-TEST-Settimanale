@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     products.forEach((product) => {
       const card = document.createElement("div")
       card.className = "card d-flex flex-column m-3"
-      card.style.width = "18rem"
+      card.style.width = "20%"
       card.innerHTML = `
       <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
         <div class="card-body flex-grow-1">  
