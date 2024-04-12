@@ -123,6 +123,11 @@ document.getElementById('deleteAllProduct').addEventListener('click', function()
 }
 
 
+//voglio creare una logica che quando si scrive un id nel nostro campo di input con id= productId  e questo id esiste deve inserisca tutti i dati dentro input corrispondenti,  se non esiste deve dare un allert "tipo: id errato o non esistente" 
+
+
+
+
 // DA SISTEMARE FA SCHIFO
 //aggiungo una funzionalità che verifica se continee qualcosa mostra altrimenti no ( prima della mod una volta apparsi restavano in quel modo)
 //adesso voglio aggiungere una funzionalita che ho citato soprache: quando nel campo di input viene inserito /DELETEALL sblocca il pulsante delete all e con allert di conferma)
@@ -165,7 +170,3 @@ document.getElementById("idForm").addEventListener("input", function () {
 
 
 
-//   document.getElementById("updateProduct").style.display = "block"
-//   document.getElementById("deleteProduct").style.display = "block"
-//   document.getElementById("deleteAllProduct").style.display = "block"
-// })
