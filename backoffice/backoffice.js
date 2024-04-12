@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   submiteProduct()
   updateProduct()
+  deleteProduct()
 })
 
 function submiteProduct() {
-  //listener al click del pulsante per inviare un nuovo prodotto
+  //click submit
   document.getElementById("submitProduct").addEventListener("click", function () {
-    // Ottieni i dati del prodotto dai campi del modulo
+    // dati contenuti dentro input
     const productData = {
       name: document.getElementById("name").value,
       description: document.getElementById("description").value,
@@ -14,7 +15,7 @@ function submiteProduct() {
       imageUrl: document.getElementById("imageUrl").value,
       price: document.getElementById("price").value,
     }
-    // richiesta POST al server per aggiungere nuovo prodotto
+    // faccio richiesta POST per aggiungere nuovo prodotto
     fetch("https://striveschool-api.herokuapp.com/api/product/", {
       method: "POST",
       headers: {
@@ -24,6 +25,7 @@ function submiteProduct() {
       },
       body: JSON.stringify(productData),
     })
+    //controlli
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((error) => console.error("Error:", error))
@@ -41,7 +43,7 @@ function updateProduct() {
       price: document.getElementById("price").value,
     }
 
-    //richiesta PUT
+    //richiesta PUT PRODUCT
     fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
       method: "PUT",
       headers: {
@@ -56,6 +58,66 @@ function updateProduct() {
       .catch((error) => console.error("Error:", error))
   })
 }
+
+
+function deleteProduct() {
+  document.getElementById("deleteProduct").addEventListener("click", function () {
+    const productId = document.getElementById("productId").value
+    const productData = {
+      name: document.getElementById("name").value,
+      description: document.getElementById("description").value,
+      brand: document.getElementById("brand").value,
+      imageUrl: document.getElementById("imageUrl").value,
+      price: document.getElementById("price").value,
+    }
+
+    //richiesta DELETE PRODUCT
+    fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
+      },
+      body: JSON.stringify(productData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error))
+  })
+}
+
+
+
+function deleteAllProduct() {
+  document.getElementById("deleteAllProduct").addEventListener("click", function () {
+    const productId = document.getElementById("productId").value
+    const productData = {
+      name: document.getElementById("name").value,
+      description: document.getElementById("description").value,
+      brand: document.getElementById("brand").value,
+      imageUrl: document.getElementById("imageUrl").value,
+      price: document.getElementById("price").value,
+    }
+
+    //richiesta DELETE PRODUCT
+    fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E",
+      },
+      body: JSON.stringify(productData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error))
+  })
+}
+
+
+
 
 // DA SISTEMARE FA SCHIFO
 document.getElementById("productForm").addEventListener("input", function () {
