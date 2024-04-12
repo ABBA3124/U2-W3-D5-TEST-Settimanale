@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   displayAllProducts()
   caricaDatiQuandoAccadeModifica()
   resetButton()
+
+
 })
 
 const Token =
@@ -229,44 +231,97 @@ document.getElementById("idForm").addEventListener("input", function () {
   }
 })
 
-// Funzione per caricare tutti i prodotti all'interno di un div specificato
+
 function displayAllProducts() {
-  // Effettua una richiesta GET per ottenere tutti i prodotti
   fetch(fetchUrl, {
     method: "GET",
     headers: {
       Authorization: Token,
     },
   })
-    .then((response) => response.json())
-    .then((products) => {
-      const productsList = document.createElement("ul") 
-      productsList.className = "list-group" // add class list-group 
-
-        products.forEach((product) => {
-        const productItem = document.createElement("li") 
-        productItem.className = "list-group-item d-flex flex-column flex-md-row align-items-md-center" 
-        productItem.innerHTML = `
-      <div class="flex-shrink-0 mb-3 mb-md-0 me-md-3">
-      <img src="${product.imageUrl}" class="img-fluid rounded" alt="${product.name}" style="width: 100px; height: auto;">
-      </div>
-      <div class="flex-grow-1">
-      <div class="fw-bold">ID: <span class="text-info">${product._id}</span></div>
-      <div>Name: ${product.name}</div>
-      <div>Description: ${product.description}</div>
-      <div>Brand: ${product.brand}</div>
-      <div>Price: <span class="fw-bold">${product.price}€</span></div>
-      </div>
-  ` 
-        productsList.appendChild(productItem) 
-      })
-
-      const container = document.getElementById("prova") 
-      container.innerHTML = "" 
-      container.appendChild(productsList)
+    .then((response) => {
+      console.log('Risposta Ricevuta');
+      if (!response.ok) {
+        throw new Error(`HTTPS errore: ${response.status}`);
+      }
+      return response.json();
     })
-    .catch((error) => console.error("Error:", error))
+    .then((products) => {
+      console.log('Prodotti caricati:', products.length);
+      const container = document.getElementById("prova");
+      const productsList = document.createElement("ul");
+      productsList.className = "list-group";
+
+      products.forEach((product) => {
+        const productItem = document.createElement("li");
+        productItem.className = "list-group-item d-flex flex-column flex-md-row align-items-md-center";
+        productItem.innerHTML = `
+        <div class="flex-shrink-0 mb-3 mb-md-0 me-md-3">
+        <img src="${product.imageUrl}" class="img-fluid rounded" alt="${product.name}" style="width: 100px; height: auto;">
+        </div>
+        <div class="flex-grow-1">
+        <div class="fw-bold">ID: <span class="text-info">${product._id}</span></div>
+        <div>Name: ${product.name}</div>
+        <div>Description: ${product.description}</div>
+        <div>Brand: ${product.brand}</div>
+        <div>Price: <span class="fw-bold">${product.price}€</span></div>
+        </div>
+        `;
+        productsList.appendChild(productItem);
+      });
+
+      container.innerHTML = "";
+      container.appendChild(productsList);
+    })
+    .catch((error) => {
+      console.error("Impossibile caricare i prodotti:", error);
+    });
 }
+
+
+
+// // Funzione per caricare tutti i prodotti all'interno di un div specificato
+// function displayAllProducts() {
+//   // Effettua una richiesta GET per ottenere tutti i prodotti
+//   fetch(fetchUrl, {
+//     method: "GET",
+//     headers: {
+//       Authorization: Token,
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((products) => {
+//       const productsList = document.createElement("ul") 
+//       productsList.className = "list-group" // add class list-group 
+
+//         products.forEach((product) => {
+//         const productItem = document.createElement("li") 
+//         productItem.className = "list-group-item d-flex flex-column flex-md-row align-items-md-center" 
+//         productItem.innerHTML = `
+//       <div class="flex-shrink-0 mb-3 mb-md-0 me-md-3">
+//       <img src="${product.imageUrl}" class="img-fluid rounded" alt="${product.name}" style="width: 100px; height: auto;">
+//       </div>
+//       <div class="flex-grow-1">
+//       <div class="fw-bold">ID: <span class="text-info">${product._id}</span></div>
+//       <div>Name: ${product.name}</div>
+//       <div>Description: ${product.description}</div>
+//       <div>Brand: ${product.brand}</div>
+//       <div>Price: <span class="fw-bold">${product.price}€</span></div>
+//       </div>
+//   ` 
+//         productsList.appendChild(productItem) 
+//       })
+
+//       const container = document.getElementById("prova") 
+//       container.innerHTML = "" 
+//       container.appendChild(productsList)
+//     })
+//     .catch((error) => console.error("Error:", error))
+// }
+
+
+
+
 
 document.getElementById("productId").addEventListener("input", function () {
   const productIdValue = this.value.trim()
@@ -326,3 +381,20 @@ function searchProduct() {
       window.history.back()
     })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

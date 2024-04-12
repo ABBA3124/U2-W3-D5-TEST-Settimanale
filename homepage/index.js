@@ -34,10 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
     products.forEach((product) => {
       const card = document.createElement("div")
       card.className = "card d-flex flex-column m-3"
-      card.style.width = "20%"
+      card.style.width = "18rem"
       card.innerHTML = `
       <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
-        <div class="card-body flex-grow-1">  
+        <div class="d-flex flex-column justify-content-between">  
             <h5 class="card-title">${product.name}</h5>
             <p class="card-text">${product.description}</p>
             <div class="text-muted d-flex justify-content-between align-items-center mt-2">
@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <small>${product.price}€</small>
             </div>
         </div>
-        <div class="btn-group mt-auto p-3" role="group">  
-            <a href="../detail/detail.html?productId=${product._id}" class="btn btn-primary">Scopri di più</a>
-            <a href="../backoffice/backoffice.html?productId=${product._id}" class="btn btn-secondary">Modifica</a>
+        <div class="btn-group mt-auto p-3 w-100" role="group">  
+            <a href="../detail/detail.html?productId=${product._id}" class="btn btn-primary w-100 w-sm-50">Scopri di più</a>
+            <a href="../backoffice/backoffice.html?productId=${product._id}" class="btn btn-secondary w-100 w-sm-50">Modifica</a>
         </div>
         `
       container.appendChild(card)
