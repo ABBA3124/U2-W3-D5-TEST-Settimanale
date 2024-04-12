@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
   deleteProduct()
   deleteAllProducts()
   displayAllProducts()
+  caricaDatiQuandoAccadeModifica()
 })
 
 function submiteProduct() {
-  //click submit
   document.getElementById("submitProduct").addEventListener("click", function () {
     // dati contenuti dentro input
     const productData = {
@@ -97,8 +97,8 @@ function deleteProduct() {
   })
 }
 
-//voglio provare a creare un delete all product con un allert di conferma
-//dopo voglio provare che inserendo nel campo di input un codice tipo. /DELETEALL sblocca il pulsante delete all e con allert di conferma
+//voglio provare a creare un delete all product con un allert di conferma FATTOOOOOOOOOOOOOOOO
+//dopo voglio provare che inserendo nel campo di input un codice tipo. /DELETEALL sblocca il pulsante delete all e con allert di conferma   FATTOOOOOOOOOOOOOOOO
 function deleteAllProducts() {
   document.getElementById("deleteAllProduct").addEventListener("click", function () {
     //con il get prendo dutti i i prodotti cosi tramite tutti id raccolti cancello tutto
@@ -174,9 +174,9 @@ document.getElementById("searchProduct").addEventListener("click", function () {
     })
 })
 
-// DA SISTEMARE FA SCHIFO
-//aggiungo una funzionalità che verifica se continee qualcosa mostra altrimenti no ( prima della mod una volta apparsi restavano in quel modo)
-//adesso voglio aggiungere una funzionalita che ho citato soprache: quando nel campo di input viene inserito /DELETEALL sblocca il pulsante delete all e con allert di conferma)
+// DA SISTEMARE FA SCHIFO FATTOOOOOOOOOOOOOOOO
+//aggiungo una funzionalità che verifica se continee qualcosa mostra altrimenti no ( prima della mod una volta apparsi restavano in quel modo) FATTOOOOOOOOOOOOOOOO
+//adesso voglio aggiungere una funzionalita che ho citato soprache: quando nel campo di input viene inserito /DELETEALL sblocca il pulsante delete all e con allert di conferma) FATTOOOOOOOOOOOOOOOO
 document.getElementById("idForm").addEventListener("input", function () {
   // valore inserito nei campi di input
   const inputs = document.querySelectorAll("#idForm input")
@@ -232,13 +232,60 @@ function displayAllProducts() {
 
       products.forEach((product) => {
         const productItem = document.createElement("li") // Crea un elemento li per ogni prodotto
-        productItem.innerHTML = `<span fw-bold">ID:</span>${product._id}<br> Name: ${product.name}<br> Description: ${product.description}<br> Brand: ${product.brand}<br> Image URL: ${product.imageUrl}<br> Price: ${product.price}` // Imposta il testo del li con i dettagli del prodotto
-        productsList.appendChild(productItem) // Aggiungi il li alla lista dei prodotti
+        productItem.innerHTML = `<span class="text-info">ID:</span> <span class="fw-bold">${product._id}</span><br> Name: ${product.name}<br> Description: ${product.description}<br> Brand: ${product.brand}<br> Image URL: ${product.imageUrl}<br> Price: ${product.price}` 
+        productsList.appendChild(productItem) // Aggiungi il <li> alla lista dei prodotti
       })
 
       const container = document.getElementById("prova") // Ottieni il div con id "prova"
-      container.innerHTML = "" // Pulisci il contenuto del div
+      container.innerHTML = "" // Pulisceil contenuto del div
       container.appendChild(productsList) // Aggiungi la lista dei prodotti al div
     })
     .catch((error) => console.error("Error:", error))
 }
+
+
+function caricaDatiQuandoAccadeModifica() {
+
+    const params = new URLSearchParams(window.location.search)
+    const productId = params.get('productId')
+    if (productId) {
+      document.getElementById('productId').value = productId
+      searchProduct()
+    }
+
+
+  }
+  
+  function searchProduct() {
+    const productId = document.getElementById("productId").value.trim()
+    if (!productId) {
+      alert("Id Non Trovato.")
+      return
+    }
+  
+    fetch(`https://striveschool-api.herokuapp.com/api/product/${productId}`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjE4ZjE0ODdmMzA0NjAwMWFlNTlmODkiLCJpYXQiOjE3MTI5MTA2NjQsImV4cCI6MTcxNDEyMDI2NH0.MF6gjc_Xgs3WqtBr41OBMTXHl7e8XYn7Zf8jq2Zkd9E"
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('ID non trovato, assicurati di aver inserito i dati correttamente')
+      }
+      return response.json()
+    })
+    .then(product => {
+      document.getElementById('name').value = product.name
+      document.getElementById('description').value = product.description
+      document.getElementById('brand').value = product.brand
+      document.getElementById('imageUrl').value = product.imageUrl
+      document.getElementById('price').value = product.price
+      document.getElementById('updateProduct').style.display = 'block'
+      document.getElementById('deleteProduct').style.display = 'block'
+    })
+    .catch(error => {
+      console.error('Error:', error)
+      alert('ERRORE NEL CARICAMENTO DEI DATI LATO SERVER, assicurati di aver inserito i dati correttamente.')
+    })
+  }
