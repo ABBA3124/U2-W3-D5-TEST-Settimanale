@@ -19,7 +19,7 @@ function fetchProducts() {
 
 function displayProducts(products) {
   const container = document.getElementById("product-container")
-  container.innerHTML = "" 
+  container.innerHTML = ""
 
   products.forEach((product) => {
     const card = document.createElement("div")
